@@ -1,4 +1,4 @@
-# Ewplication sur comment faire tourner le site
+# Explication sur comment faire tourner le site
 
 ## Etape 1 : cloner le dépot (si il y a un problème avec le zip fourni)
 git clone https://github.com/AbidinOulladali/cine-project.git, puis faire : 
