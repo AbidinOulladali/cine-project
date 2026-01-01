@@ -12,11 +12,11 @@ npm start
 lancer le serveur : npm start
 
 ## Etape 4 : Si ngrok n'est pas lancer, le lancer
-télécharger ngrok, puis tapper : ngrok http 8080\n
-Dans mon cas l'URL publique qu'il me renvoie est : \n
-'https://viscously-stratospherical-loralee.ngrok-free.dev'.\n
-Dans authService.ts, ligne 30, il y a : \n
-const redirectUrl = "https://viscously-stratospherical-loralee.ngrok-free.dev/"; // URL de redirection après authentification\n
-et dans mon API, en tant que API redirection, c'est ce qu'il y a , si vous avez une autre URL \n
+télécharger ngrok, puis tapper : ngrok http 8080.
+Dans mon cas l'URL publique qu'il me renvoie est : 
+'https://viscously-stratospherical-loralee.ngrok-free.dev'.
+Dans authService.ts, ligne 30, il y a : 
+const redirectUrl = "https://viscously-stratospherical-loralee.ngrok-free.dev/"; (qui est une URL de redirection après authentification)
+et dans mon API, en tant que API redirection, c'est ce qu'il y a , si vous avez une autre URL 
 publique je peux la changer.
 
