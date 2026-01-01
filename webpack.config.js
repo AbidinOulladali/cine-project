@@ -38,6 +38,7 @@ module.exports = {
     port: 8080,
     hot: true,
     open: true,
+    allowedHosts: 'all', // Autoriser toutes les origines pour le développement
     historyApiFallback: true,
   },
   devtool: 'source-map',

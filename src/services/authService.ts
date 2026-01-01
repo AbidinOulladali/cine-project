@@ -27,11 +27,13 @@ export class AuthService {
 
   // Étape 2: Rediriger vers TMDB pour se connecter
   static redirectToTMDBAuth(requestToken: string): void {
-    const redirectUrl = `${window.location.origin}${window.location.pathname}`;
-    // Utiliser l'URL /authenticate/{request_token} recommandée par TMDB
-    window.location.href = `${TMDB_AUTH_URL}/${requestToken}?redirect_to=${encodeURIComponent(
+    const redirectUrl =
+      "https://viscously-stratospherical-loralee.ngrok-free.dev/"; // URL de redirection après authentification
+    const tmdbUrl = `${TMDB_AUTH_URL}/${requestToken}?redirect_to=${encodeURIComponent(
       redirectUrl
     )}`;
+    console.log("Redirection TMDB:", tmdbUrl);
+    window.location.href = tmdbUrl;
   }
 
   // Étape 3: Créer une session après l'authentification via le backend
@@ -85,14 +87,17 @@ export class AuthService {
     const sessionId = this.getSessionId();
     if (!sessionId) return false;
 
-    const response = await fetch(`http://localhost:3001/api/movie/${movieId}/rating`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ sessionId, rating }),
-      credentials: "include",
-    });
+    const response = await fetch(
+      `http://localhost:3001/api/movie/${movieId}/rating`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ sessionId, rating }),
+        credentials: "include",
+      }
+    );
 
     return response.ok;
   }

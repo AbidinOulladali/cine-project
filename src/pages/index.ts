@@ -1,6 +1,6 @@
 import { TMDBService } from '../services/tmdbService';
 import { AuthService } from '../services/authService';
-import { GeolocationService } from '../services/geolocationService';
+// import { GeolocationService } from '../services/geolocationService';
 import { Movie } from '../types';
 
 class IndexPage {
