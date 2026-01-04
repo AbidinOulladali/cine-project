@@ -1,45 +1,77 @@
-const path = require('path');
-const CopyPlugin = require('copy-webpack-plugin');
+const path = require("path");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const CopyWebpackPlugin = require("copy-webpack-plugin");
 
 module.exports = {
-  mode: 'development',
+  mode: "development",
+
+  // Point d'entrée
   entry: {
-    index: './src/pages/index.ts',
-    search: './src/pages/search.ts',
-    movie: './src/pages/movie.ts',
+    index: "./src/client/index.js",
+    movie: "./src/client/movie.js",
+    search: "./src/client/search.js",
   },
+
+  // Sortie
   output: {
-    filename: '[name].js',
-    path: path.resolve(__dirname, 'dist'),
+    path: path.resolve(__dirname, "dist"),
+    filename: "[name].bundle.js",
+    clean: true,
   },
-  module: {
-    rules: [
-      {
-        test: /\.tsx?$/,
-        use: 'ts-loader',
-        exclude: /node_modules/,
-      },
-    ],
-  },
-  resolve: {
-    extensions: ['.tsx', '.ts', '.js'],
-  },
-  plugins: [
-    new CopyPlugin({
-      patterns: [
-        { from: 'public', to: '' },
-      ],
-    }),
-  ],
+
+  // Serveur de développement
   devServer: {
     static: {
-      directory: path.join(__dirname, 'dist'),
+      directory: path.join(__dirname, "dist"),
     },
     port: 8080,
     hot: true,
     open: true,
-    allowedHosts: 'all', // Autoriser toutes les origines pour le développement
     historyApiFallback: true,
+    allowedHosts: "all", // ✅ Accepte tous les hosts (ngrok, localhost, etc.)
+    proxy: {
+      "/api": {
+        target: "http://localhost:3001",
+        changeOrigin: true,
+      },
+    },
   },
-  devtool: 'source-map',
+
+  // Plugins
+  plugins: [
+    // Page d'accueil
+    new HtmlWebpackPlugin({
+      template: "./src/client/index.html",
+      filename: "index.html",
+      chunks: ["index"],
+    }),
+
+    // Page de film
+    new HtmlWebpackPlugin({
+      template: "./src/client/movie.html",
+      filename: "movie.html",
+      chunks: ["movie"],
+    }),
+
+    // Page de recherche
+    new HtmlWebpackPlugin({
+      template: "./src/client/search.html",
+      filename: "search.html",
+      chunks: ["search"],
+    }),
+  ],
+
+  // Loaders
+  module: {
+    rules: [
+      {
+        test: /\.css$/,
+        use: ["style-loader", "css-loader"],
+      },
+      {
+        test: /\.(png|jpg|jpeg|gif|svg)$/,
+        type: "asset/resource",
+      },
+    ],
+  },
 };

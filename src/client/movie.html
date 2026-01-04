@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Détails du film - Cinéma</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #1a1a1a;
+        color: #fff;
+      }
+
+      header {
+        background-color: #0a0e27;
+        padding: 1rem 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+      }
+
+      .logo {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: #e50914;
+      }
+
+      nav {
+        display: flex;
+        gap: 2rem;
+        align-items: center;
+      }
+
+      nav a {
+        color: #fff;
+        text-decoration: none;
+        transition: color 0.3s;
+      }
+
+      nav a:hover {
+        color: #e50914;
+      }
+
+      .auth-section {
+        display: flex;
+        gap: 1rem;
+        align-items: center;
+      }
+
+      button {
+        background-color: #e50914;
+        color: white;
+        border: none;
+        padding: 0.5rem 1rem;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 1rem;
+        transition: background-color 0.3s;
+      }
+
+      button:hover {
+        background-color: #d40812;
+      }
+
+      .user-info {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .user-avatar {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background-color: #666;
+      }
+
+      main {
+        padding: 2rem;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .back-link {
+        color: #e50914;
+        text-decoration: none;
+        margin-bottom: 2rem;
+        display: inline-block;
+        transition: color 0.3s;
+      }
+
+      .back-link:hover {
+        color: #ff6b6b;
+      }
+
+      .movie-header {
+        display: grid;
+        grid-template-columns: 250px 1fr;
+        gap: 2rem;
+        margin-bottom: 3rem;
+      }
+
+      .movie-poster {
+        width: 250px;
+        height: 375px;
+        object-fit: cover;
+        border-radius: 8px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+      }
+
+      .movie-details {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+
+      h1 {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+      }
+
+      .movie-meta {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        margin-bottom: 2rem;
+      }
+
+      .meta-item {
+        display: flex;
+        gap: 1rem;
+      }
+
+      .meta-label {
+        font-weight: bold;
+        color: #e50914;
+        min-width: 120px;
+      }
+
+      .movie-overview {
+        line-height: 1.6;
+        margin-top: 1rem;
+      }
+
+      .rating-section {
+        margin-top: 2rem;
+        padding: 1.5rem;
+        background-color: #2a2a2a;
+        border-radius: 8px;
+      }
+
+      .rating-section h3 {
+        margin-bottom: 1rem;
+      }
+
+      .rating-form {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .rating-input {
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+      }
+
+      .star {
+        font-size: 2rem;
+        cursor: pointer;
+        color: #666;
+        transition: color 0.2s;
+      }
+
+      .star:hover,
+      .star.active {
+        color: #ffc107;
+      }
+
+      textarea {
+        width: 100%;
+        padding: 1rem;
+        background-color: #1a1a1a;
+        border: 1px solid #444;
+        color: #fff;
+        border-radius: 4px;
+        font-family: inherit;
+        resize: vertical;
+        min-height: 100px;
+      }
+
+      textarea::placeholder {
+        color: #aaa;
+      }
+
+      textarea:focus {
+        outline: none;
+        border-color: #e50914;
+        box-shadow: 0 0 10px rgba(229, 9, 20, 0.3);
+      }
+
+      .submit-btn {
+        width: fit-content;
+        padding: 0.75rem 1.5rem;
+        font-weight: bold;
+      }
+
+      .login-message {
+        background-color: #1976d2;
+        padding: 1rem;
+        border-radius: 4px;
+        margin-bottom: 1rem;
+      }
+
+      .comments-section {
+        margin-top: 3rem;
+      }
+
+      .comments-section h2 {
+        margin-bottom: 2rem;
+        font-size: 1.5rem;
+      }
+
+      .comment {
+        background-color: #2a2a2a;
+        padding: 1.5rem;
+        border-radius: 8px;
+        margin-bottom: 1.5rem;
+        border-left: 4px solid #e50914;
+      }
+
+      .comment-header {
+        display: flex;
+        gap: 1rem;
+        margin-bottom: 1rem;
+        align-items: center;
+      }
+
+      .comment-avatar {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        background-color: #444;
+        flex-shrink: 0;
+      }
+
+      .comment-info {
+        flex: 1;
+      }
+
+      .comment-author {
+        font-weight: bold;
+        margin-bottom: 0.25rem;
+      }
+
+      .comment-date {
+        font-size: 0.85rem;
+        color: #aaa;
+      }
+
+      .comment-content {
+        line-height: 1.6;
+        color: #ddd;
+      }
+
+      .no-comments {
+        text-align: center;
+        padding: 2rem;
+        color: #aaa;
+      }
+
+      .loading {
+        text-align: center;
+        padding: 2rem;
+      }
+
+      .spinner {
+        border: 4px solid #444;
+        border-top: 4px solid #e50914;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        animation: spin 1s linear infinite;
+        margin: 0 auto;
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      .error {
+        background-color: #d32f2f;
+        color: white;
+        padding: 1rem;
+        border-radius: 4px;
+        margin-bottom: 1rem;
+      }
+
+      .success {
+        background-color: #4caf50;
+        color: white;
+        padding: 1rem;
+        border-radius: 4px;
+        margin-bottom: 1rem;
+      }
+
+      @media (max-width: 768px) {
+        .movie-header {
+          grid-template-columns: 1fr;
+        }
+
+        .movie-poster {
+          width: 100%;
+          height: auto;
+        }
+
+        h1 {
+          font-size: 1.5rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="logo">🎬 Cinéma</div>
+      <nav>
+        <a href="index.html">Accueil</a>
+        <a href="search.html">Rechercher</a>
+      </nav>
+      <div class="auth-section">
+        <button id="loginBtn">Se connecter</button>
+        <div id="userInfo" class="user-info" style="display: none">
+          <span id="username"></span>
+          <img id="userAvatar" class="user-avatar" alt="Avatar" />
+          <button id="logoutBtn">Déconnexion</button>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <a href="javascript:history.back()" class="back-link">← Retour</a>
+
+      <div id="error" class="error" style="display: none"></div>
+      <div id="success" class="success" style="display: none"></div>
+
+      <div class="loading" id="loading">
+        <div class="spinner"></div>
+        <p>Chargement du film...</p>
+      </div>
+
+      <div id="movieContent" style="display: none">
+        <div class="movie-header">
+          <img id="poster" class="movie-poster" alt="Poster" />
+          <div class="movie-details">
+            <div>
+              <h1 id="title"></h1>
+              <div class="movie-meta">
+                <div class="meta-item">
+                  <span class="meta-label">Date de sortie :</span>
+                  <span id="releaseDate"></span>
+                </div>
+                <div class="meta-item">
+                  <span class="meta-label">Note :</span>
+                  <span id="rating"></span>
+                </div>
+              </div>
+              <div class="movie-overview">
+                <strong>Résumé :</strong>
+                <p id="overview" style="margin-top: 0.5rem"></p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="ratingSection" class="rating-section" style="display: none">
+          <h3>Évaluez ce film</h3>
+          <div class="login-message" id="loginMessage" style="display: none">
+            <a href="#" id="loginLink">Connectez-vous</a> pour laisser votre
+            avis.
+          </div>
+          <form class="rating-form" id="reviewForm" style="display: none">
+            <div class="rating-input">
+              <label for="ratingStars">Votre note :</label>
+              <div id="ratingStars"></div>
+            </div>
+            <textarea
+              id="reviewText"
+              placeholder="Écrivez votre avis..."
+              required
+            ></textarea>
+            <button type="submit" class="submit-btn">Publier votre avis</button>
+          </form>
+        </div>
+
+        <div class="comments-section">
+          <h2>Avis des utilisateurs</h2>
+          <div id="commentsContainer" class="loading">
+            <div class="spinner"></div>
+            <p>Chargement des avis...</p>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!--<script src="dist/movie.js"></script>-->
+  </body>
+</html>
